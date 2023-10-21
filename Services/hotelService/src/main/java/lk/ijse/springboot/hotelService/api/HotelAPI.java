@@ -1,7 +1,7 @@
 package lk.ijse.springboot.hotelService.api;
 
 import lk.ijse.springboot.hotelService.bo.HotelBO;
-import lk.ijse.springboot.hotelService.dto.HotelDTO;
+import lk.ijse.springboot.hotelService.dto.RequestDTO;
 import lk.ijse.springboot.hotelService.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,15 +18,15 @@ public class HotelAPI {
     HotelBO hotelBO;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(HotelDTO hotelDTO){
-        hotelBO.save(hotelDTO);
+    public ResponseUtil save(RequestDTO requestDTO){
+        hotelBO.save(requestDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody HotelDTO hotelDTO){
-        hotelBO.update(id, hotelDTO);
+    public ResponseUtil update(String id,@RequestBody RequestDTO requestDTO){
+        hotelBO.update(id, requestDTO);
         return new  ResponseUtil(200,"OK",null);
     }
 
@@ -38,13 +38,13 @@ public class HotelAPI {
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil search(@PathVariable String id){
-        HotelDTO hotelDTO = hotelBO.search(id);
-        return new  ResponseUtil(200,"OK", hotelDTO);
+        RequestDTO requestDTO = hotelBO.search(id);
+        return new  ResponseUtil(200,"OK", requestDTO);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil getAll(){
-        List<HotelDTO> all= hotelBO.getAll();
+        List<RequestDTO> all= hotelBO.getAll();
         return new ResponseUtil(200,"OK",all);
     }
 

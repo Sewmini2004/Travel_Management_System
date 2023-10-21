@@ -2,7 +2,7 @@ package lk.ijse.springboot.hotelService.bo.impl;
 
 
 import lk.ijse.springboot.hotelService.bo.HotelBO;
-import lk.ijse.springboot.hotelService.dto.HotelDTO;
+import lk.ijse.springboot.hotelService.dto.RequestDTO;
 import lk.ijse.springboot.hotelService.entity.Hotel;
 import lk.ijse.springboot.hotelService.repository.HotelRepo;
 import lk.ijse.springboot.hotelService.util.EntityDTOConversion;
@@ -29,9 +29,9 @@ public class HotelBoImpl implements HotelBO {
     ModelMapper modelMapper;
 
     @Override
-    public void save(HotelDTO hotelDTO) {
-        if(!hotelRepo.existsById(hotelDTO.getHotelId())){
-            hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
+    public void save(RequestDTO requestDTO) {
+        if(!hotelRepo.existsById(requestDTO.getHotelId())){
+            hotelRepo.save(entityDTOConversion.getUserEntity(requestDTO));
         }
     }
 
@@ -43,27 +43,27 @@ public class HotelBoImpl implements HotelBO {
     }
 
     @Override
-    public void update(String id, HotelDTO hotelDTO) {
+    public void update(String id, RequestDTO requestDTO) {
         if (hotelRepo.existsById(id)){
-            hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
+            hotelRepo.save(entityDTOConversion.getUserEntity(requestDTO));
         }
     }
 
     @Override
-    public HotelDTO search(String id) {
+    public RequestDTO search(String id) {
        if (hotelRepo.existsById(id)){
            Hotel hotel = hotelRepo.findById(id).get();
-           HotelDTO hotelDTO = entityDTOConversion.getUserDTO(hotel);
-           return hotelDTO;
+           RequestDTO requestDTO = entityDTOConversion.getUserDTO(hotel);
+           return requestDTO;
        }
        return null;
     }
 
     @Override
-    public List<HotelDTO> getAll() {
+    public List<RequestDTO> getAll() {
         List<Hotel> all = hotelRepo.findAll();
-        List<HotelDTO> hotelDTOList = modelMapper.map(all, new TypeToken<List<HotelDTO>>() {
+        List<RequestDTO> requestDTOList = modelMapper.map(all, new TypeToken<List<RequestDTO>>() {
         }.getType());
-        return hotelDTOList;
+        return requestDTOList;
     }
 }

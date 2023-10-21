@@ -1,15 +1,15 @@
 package lk.ijse.springboot.hotelService.bo;
 
 
-import lk.ijse.springboot.hotelService.dto.HotelDTO;
+import lk.ijse.springboot.hotelService.dto.RequestDTO;
 
 import java.util.List;
 
 public interface HotelBO {
-    void save(HotelDTO hotelDTO);
+    void save(RequestDTO requestDTO);
     void delete(String id);
-    void update(String id, HotelDTO hotelDTO);
-    HotelDTO search(String id);
-    List<HotelDTO> getAll();
+    void update(String id, RequestDTO requestDTO);
+    RequestDTO search(String id);
+    List<RequestDTO> getAll();
 
 }

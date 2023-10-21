@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,10 +16,10 @@ public class VehicleDTO {
     private String hybrid_or_Non_Hybrid;
     private int fuelUsage;
     private String transmissionType;
-    private byte[] driverLicenseImage;
+    private MultipartFile driverLicenseImage;
     private String contactNo;
     private String DriverName;
-    private byte[] ImagesVehicle;
+    private MultipartFile ImagesVehicle;
     private int SeatCapacity;
     private String remarks;
     private String vehicleType;

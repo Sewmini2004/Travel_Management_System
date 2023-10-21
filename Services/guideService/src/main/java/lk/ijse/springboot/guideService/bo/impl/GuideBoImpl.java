@@ -1,7 +1,7 @@
 package lk.ijse.springboot.guideService.bo.impl;
 
 import lk.ijse.springboot.guideService.bo.GuideBO;
-import lk.ijse.springboot.guideService.dto.GuideDTO;
+import lk.ijse.springboot.guideService.dto.ResponseDTO;
 import lk.ijse.springboot.guideService.entity.Guide;
 import lk.ijse.springboot.guideService.repository.GuideRepo;
 import lk.ijse.springboot.guideService.util.EntityDTOConversion;
@@ -27,9 +27,9 @@ public class GuideBoImpl implements GuideBO {
     ModelMapper modelMapper;
 
     @Override
-    public void save(GuideDTO guideDTO) {
-        if(!guideRepo.existsById(guideDTO.getGuideId())){
-            guideRepo.save(entityDTOConversion.getGuideEntity(guideDTO));
+    public void save(ResponseDTO responseDTO) {
+        if(!guideRepo.existsById(responseDTO.getGuideId())){
+            guideRepo.save(entityDTOConversion.getGuideEntity(responseDTO));
         }
     }
 
@@ -41,27 +41,27 @@ public class GuideBoImpl implements GuideBO {
     }
 
     @Override
-    public void update(String id, GuideDTO guideDTO) {
+    public void update(String id, ResponseDTO responseDTO) {
         if (guideRepo.existsById(id)){
-            guideRepo.save(entityDTOConversion.getGuideEntity(guideDTO));
+            guideRepo.save(entityDTOConversion.getGuideEntity(responseDTO));
         }
     }
 
     @Override
-    public GuideDTO search(String id) {
+    public ResponseDTO search(String id) {
        if (guideRepo.existsById(id)){
            Guide guide = guideRepo.findById(id).get();
-           GuideDTO guideDTO = entityDTOConversion.getGuideDTO(guide);
-           return guideDTO;
+           ResponseDTO responseDTO = entityDTOConversion.getGuideDTO(guide);
+           return responseDTO;
        }
        return null;
     }
 
     @Override
-    public List<GuideDTO> getAll() {
+    public List<ResponseDTO> getAll() {
         List<Guide> all = guideRepo.findAll();
-        List<GuideDTO> guideDTOList = modelMapper.map(all, new TypeToken<List<GuideDTO>>() {
+        List<ResponseDTO> responseDTOList = modelMapper.map(all, new TypeToken<List<ResponseDTO>>() {
         }.getType());
-        return guideDTOList;
+        return responseDTOList;
     }
 }

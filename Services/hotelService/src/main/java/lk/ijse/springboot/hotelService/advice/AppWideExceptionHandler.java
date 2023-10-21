@@ -1,6 +1,8 @@
 package lk.ijse.springboot.hotelService.advice;
 
-import lk.ijse.springboot.userService.util.ResponseUtil;
+import lk.ijse.springboot.hotelService.util.ResponseUtil;
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

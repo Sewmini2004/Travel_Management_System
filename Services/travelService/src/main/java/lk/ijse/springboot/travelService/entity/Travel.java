@@ -3,10 +3,8 @@ package lk.ijse.springboot.travelService.entity;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lk.ijse.springboot.travelService.dto.Duration;
+import lk.ijse.springboot.travelService.dto.DurationDto;
 import lombok.*;
-
-import java.awt.geom.Area;
 
 
 @AllArgsConstructor
@@ -24,7 +22,7 @@ public class Travel implements Super {
     private String guideId;
     private String vehicleId;
     @Embedded
-    private Duration travelDuration;
+    private DurationDto travelDurationDto;
     private String travelArea;
     private int noOfAdults;
     private int noOfChildren;
