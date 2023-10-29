@@ -4,28 +4,44 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 import lombok.*;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 @ToString
 @Entity
 
 public class Hotel implements Super {
     @Id
+    @GeneratedValue
 
     private String hotelId;
+    @NotNull(message = "Hotel name shouldn't be null")
+    @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid hotel name")
     private String hotelName;
+    @NotEmpty(message = "hotel Location shouldn't be empty")
     private String hotelLocation;
+    @NotNull(message = "Address shouldn't be null")
+    @Pattern(regexp ="^[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+$"
+    , message = "Invalid address")
     private String address;
+    @Email(message = "Invalid hotel email address")
+    @Pattern(regexp ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$" , message = "Invalid hotel email address")
     private String hotelEmail;
     @Embedded
     private Contact contactNumber;
+    @NotEmpty(message = "Hotel Fee shouldn't be empty")
+    @Negative(message = " Hotel Fee shouldn't be empty")
+    @Min(value = 0, message = "Hotel Fee shouldn't be less than 0")
     private double hotelFee;
+    @NotEmpty(message = "Hotel Category shouldn't be empty")
     private String hotelCategory;
+    @NotEmpty(message = "pets Allowed Or Not shouldn't be empty")
     private String petsAllowedOrNot;
+    @NotEmpty(message = "Remarks shouldn't be empty")
     private String remarks;
 
 }
