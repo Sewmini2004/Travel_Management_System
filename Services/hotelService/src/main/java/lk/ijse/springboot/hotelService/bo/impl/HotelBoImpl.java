@@ -2,7 +2,7 @@ package lk.ijse.springboot.hotelService.bo.impl;
 
 
 import lk.ijse.springboot.hotelService.bo.HotelBO;
-import lk.ijse.springboot.hotelService.dto.RequestDTO;
+import lk.ijse.springboot.hotelService.dto.HotelDTO;
 import lk.ijse.springboot.hotelService.entity.Hotel;
 import lk.ijse.springboot.hotelService.repository.HotelRepo;
 import lk.ijse.springboot.hotelService.util.EntityDTOConversion;
@@ -29,9 +29,9 @@ public class HotelBoImpl implements HotelBO {
     ModelMapper modelMapper;
 
     @Override
-    public void save(RequestDTO requestDTO) {
-        if(!hotelRepo.existsById(requestDTO.getHotelId())){
-            hotelRepo.save(entityDTOConversion.getUserEntity(requestDTO));
+    public void save(HotelDTO hotelDTO) {
+        if(!hotelRepo.existsById(hotelDTO.getHotelId())){
+            hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
         }
     }
 
@@ -43,26 +43,26 @@ public class HotelBoImpl implements HotelBO {
     }
 
     @Override
-    public void update(String id, RequestDTO requestDTO) {
+    public void update(String id, HotelDTO hotelDTO) {
         if (hotelRepo.existsById(id)){
-            hotelRepo.save(entityDTOConversion.getUserEntity(requestDTO));
+            hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
         }
     }
 
     @Override
-    public RequestDTO search(String id) {
+    public HotelDTO search(String id) {
        if (hotelRepo.existsById(id)){
            Hotel hotel = hotelRepo.findById(id).get();
-           RequestDTO requestDTO = entityDTOConversion.getUserDTO(hotel);
-           return requestDTO;
+           HotelDTO hotelDTO = entityDTOConversion.getUserDTO(hotel);
+           return hotelDTO;
        }
        return null;
     }
 
     @Override
-    public List<RequestDTO> getAll() {
+    public List<HotelDTO> getAll() {
         List<Hotel> all = hotelRepo.findAll();
-        List<RequestDTO> requestDTOList = modelMapper.map(all, new TypeToken<List<RequestDTO>>() {
+        List<HotelDTO> requestDTOList = modelMapper.map(all, new TypeToken<List<HotelDTO>>() {
         }.getType());
         return requestDTOList;
     }

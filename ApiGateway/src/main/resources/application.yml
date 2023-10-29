@@ -11,7 +11,7 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/api/userService/**
+            - Path=/user/**
           filters:
             - StripPrefix=1
 
@@ -19,7 +19,7 @@ spring:
         - id: vehicle-service
           uri: lb://vehicle-service
           predicates:
-            - Path=/api/vehicleService/**
+            - Path=/vehicle/**
           filters:
             - StripPrefix=1
 
@@ -27,7 +27,7 @@ spring:
         - id: travel-service
           uri: lb://travel-service
           predicates:
-               - Path=/api/travelService/**
+               - Path=/travel/**
           filters:
                - StripPrefix=1
 
@@ -35,7 +35,7 @@ spring:
         - id: guide-service
           uri: lb://guide-service
           predicates:
-                - Path=/api/guideService/**
+                - Path=/guide/**
           filters:
                  - StripPrefix=1
 

@@ -1,6 +1,6 @@
 package lk.ijse.springboot.hotelService.util;
 
-import lk.ijse.springboot.hotelService.dto.RequestDTO;
+import lk.ijse.springboot.hotelService.dto.HotelDTO;
 import lk.ijse.springboot.hotelService.entity.Hotel;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -14,12 +14,12 @@ public class EntityDTOConversion {
         this.modelMapper = modelMapper;
     }
 
-    public Hotel getUserEntity(RequestDTO requestDTO){
-        return modelMapper.map(requestDTO, Hotel.class);
+    public Hotel getUserEntity(HotelDTO hotelDTO){
+        return modelMapper.map(hotelDTO, Hotel.class);
     }
 
-    public RequestDTO getUserDTO(Hotel hotel){
-        return modelMapper.map(hotel, RequestDTO.class);
+    public HotelDTO getUserDTO(Hotel hotel){
+        return modelMapper.map(hotel, HotelDTO.class);
     }
 
 }

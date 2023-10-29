@@ -2,6 +2,7 @@ package lk.ijse.springboot.hotelService.entity;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import lombok.*;
 
 public class Hotel implements Super {
     @Id
+
     private String hotelId;
     private String hotelName;
     private String hotelLocation;

@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class ResponseDTO {
+public class HotelDTO {
     private String hotelId;
     private String hotelName;
     private String hotelLocation;
