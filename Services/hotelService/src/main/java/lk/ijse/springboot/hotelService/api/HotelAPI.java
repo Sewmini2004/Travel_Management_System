@@ -24,6 +24,7 @@ public class HotelAPI {
         return new ResponseUtil(200,"Saved Success",null);
     }
 
+
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil update(String id,@RequestBody RequestDTO requestDTO){
         hotelBO.update(id, requestDTO);

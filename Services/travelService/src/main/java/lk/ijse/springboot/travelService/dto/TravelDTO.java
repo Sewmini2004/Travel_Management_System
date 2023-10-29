@@ -1,5 +1,4 @@
 package lk.ijse.springboot.travelService.dto;
-import jakarta.persistence.Embedded;
 import lk.ijse.springboot.travelService.entity.PackageValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;

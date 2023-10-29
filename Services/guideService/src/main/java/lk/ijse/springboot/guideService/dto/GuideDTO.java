@@ -11,7 +11,7 @@ import java.awt.*;
 @NoArgsConstructor
 @Data
 @ToString
-public class ResponseDTO {
+public class GuideDTO {
     private String guideId;
     private String guideName;
     private String guideAddress;
