@@ -2,6 +2,7 @@ package lk.ijse.springboot.travelService.entity;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lk.ijse.springboot.travelService.dto.DurationDto;
 import lombok.*;
@@ -15,7 +16,7 @@ import lombok.*;
 
 public class Travel implements Super {
     @Id
-
+    @GeneratedValue
     private String packageId;
     private String userId;
     private String hotelId;

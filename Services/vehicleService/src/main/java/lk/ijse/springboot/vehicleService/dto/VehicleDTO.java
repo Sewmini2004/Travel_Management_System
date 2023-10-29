@@ -16,12 +16,13 @@ public class VehicleDTO {
     private String hybrid_or_Non_Hybrid;
     private int fuelUsage;
     private String transmissionType;
-    private MultipartFile driverLicenseImage;
+    private String driverLicenseImage;
     private String contactNo;
     private String DriverName;
-    private MultipartFile ImagesVehicle;
+    private String ImagesVehicle;
     private int SeatCapacity;
     private String remarks;
     private String vehicleType;
+    private VehicleCategory vehicleCategory;
 
 }
