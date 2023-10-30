@@ -1,5 +1,6 @@
 package lk.ijse.springboot.hotelService.api;
 
+import jakarta.validation.Valid;
 import lk.ijse.springboot.hotelService.bo.HotelBO;
 import lk.ijse.springboot.hotelService.dto.HotelDTO;
 
@@ -18,16 +19,16 @@ public class HotelAPI {
     @Autowired
     HotelBO hotelBO;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(HotelDTO hotelDTO){
+    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil save(@ModelAttribute @Valid HotelDTO hotelDTO){
         hotelBO.save(hotelDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody HotelDTO hotelDTO){
+    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil update(String id,@RequestBody  @Valid  HotelDTO hotelDTO){
         hotelBO.update(id, hotelDTO);
         return new  ResponseUtil(200,"OK",null);
     }

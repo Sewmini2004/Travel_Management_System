@@ -1,5 +1,6 @@
 package lk.ijse.springboot.travelService.api;
 
+import jakarta.validation.Valid;
 import lk.ijse.springboot.travelService.bo.TravelBO;
 import lk.ijse.springboot.travelService.dto.TravelDTO;
 import lk.ijse.springboot.travelService.util.ResponseUtil;
@@ -17,15 +18,15 @@ public class TravelAPI {
     @Autowired
     TravelBO travelBO;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(TravelDTO travelDTO){
+    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO){
         travelBO.save(travelDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody TravelDTO travelDTO){
+    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil update(String id,@RequestBody  @Valid  TravelDTO travelDTO){
         travelBO.update(id, travelDTO);
         return new  ResponseUtil(200,"OK",null);
     }

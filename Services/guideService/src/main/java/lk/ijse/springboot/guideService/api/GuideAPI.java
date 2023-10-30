@@ -1,5 +1,6 @@
 package lk.ijse.springboot.guideService.api;
 
+import jakarta.validation.Valid;
 import lk.ijse.springboot.guideService.bo.GuideBO;
 import lk.ijse.springboot.guideService.dto.GuideDTO;
 import lk.ijse.springboot.guideService.util.ResponseUtil;
@@ -16,15 +17,15 @@ public class GuideAPI {
     @Autowired
     GuideBO guideBO;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(GuideDTO guideDTO){
+    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil save(@Valid GuideDTO guideDTO){
         guideBO.save(guideDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody GuideDTO guideDTO){
+    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseUtil update(String id,@RequestBody @Valid  GuideDTO guideDTO){
         guideBO.update(id, guideDTO);
         return new  ResponseUtil(200,"OK",null);
     }
