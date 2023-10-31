@@ -1,5 +1,6 @@
 package lk.ijse.springboot.vehicleService.api;
 
+import jakarta.validation.Valid;
 import lk.ijse.springboot.vehicleService.bo.VehicleBO;
 import lk.ijse.springboot.vehicleService.dto.VehicleDTO;
 import lk.ijse.springboot.vehicleService.util.ResponseUtil;
@@ -17,14 +18,14 @@ public class VehicleAPI {
     VehicleBO vehicleBO;
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseUtil save(@VehicleDTO vehicleDTO){
+    public ResponseUtil save(@Valid VehicleDTO vehicleDTO){
         vehicleBO.save(vehicleDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
     @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseUtil update(String id,@RequestBody VehicleDTO vehicleDTO){
+    public ResponseUtil update(String id,@RequestBody @Valid VehicleDTO vehicleDTO){
         vehicleBO.update(id, vehicleDTO);
         return new  ResponseUtil(200,"OK",null);
     }

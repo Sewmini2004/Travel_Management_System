@@ -10,6 +10,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -27,6 +28,14 @@ public class TravelBoImpl implements TravelBO {
 
     @Override
     public void save(TravelDTO travelDTO) {
+//        check user id
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject("http://guide-service/api/guideService/"+trave)
+//        check vehicle
+//        check hotel
+//        check guide if needed
+
+
         if(!travelRepo.existsById(travelDTO.getPackageId())){
             travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
         }

@@ -18,7 +18,7 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-
+/* nee pana ek dl nee amtk wela ekko hdlk nee*/
 public class Travel implements Super {
     @Id
     @GeneratedValue
@@ -42,13 +42,11 @@ public class Travel implements Super {
     @NotEmpty(message = " need Guide Or No shouldn't be empty")
     private String needGuideOrNo;
     @NotEmpty(message = " Total head count shouldn't be empty")
-    @Negative
     @Min(value = 1, message = "Total head count shouldn't be less than 1")
     private int totalHeadcount;
     @NotEmpty(message = " With Pets Or No shouldn't be empty")
     private boolean withPetsOrNo;
     @NotEmpty(message = " paid Value shouldn't be empty")
-    @Negative(message = " paid Value shouldn't be empty")
     @Min(value = 0, message = "paid Value shouldn't be less than 0")
     private double paidValue;
     @Embedded

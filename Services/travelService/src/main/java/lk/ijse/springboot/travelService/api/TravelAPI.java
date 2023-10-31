@@ -15,8 +15,13 @@ import java.util.List;
 @RequestMapping("/api/travelService")
 @CrossOrigin
 public class TravelAPI {
+
+    private TravelBO travelBO;
+
     @Autowired
-    TravelBO travelBO;
+    public TravelAPI(TravelBO travelBO) {
+        this.travelBO = travelBO;
+    }
 
     @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO){
