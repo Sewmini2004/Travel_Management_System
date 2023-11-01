@@ -15,14 +15,12 @@ import java.util.Map;
 @RestControllerAdvice
 @CrossOrigin
 public class GlobalExceptionHandler {
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity exceptionHandler(Exception e) {
-        return new ResponseEntity(new ResponseUtil(500, e.getMessage(), null), HttpStatus.INTERNAL_SERVER_ERROR);
 
-
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseUtil exceptionHandler(Exception ex) {
+        return new ResponseUtil(400, "Error", ex.getMessage());
     }
-
-
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
