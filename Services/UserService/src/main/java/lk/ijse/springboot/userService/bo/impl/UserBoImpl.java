@@ -1,5 +1,7 @@
 package lk.ijse.springboot.userService.bo.impl;
 
+import lk.ijse.springboot.userService.bo.exception.AlreadyExistException;
+import lk.ijse.springboot.userService.bo.exception.NotFoundException;
 import lk.ijse.springboot.userService.dto.UserDTO;
 import lk.ijse.springboot.userService.bo.UserBO;
 
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
 @Service
 @Transactional
@@ -29,7 +32,17 @@ public class UserBoImpl implements UserBO {
     @Override
     public void save(UserDTO userDTO) {
         if(!userRepo.existsById(String.valueOf(userDTO.getUserId()))){
+
+            String imgBase64 = Base64.getEncoder().encodeToString(userDTO.getUserNICImagesFrontEnd().getBytes());
+            entityDTOConversion.getUserEntity(userDTO).setUserNICImagesFrontEnd(imgBase64);
+
+            String imgBase64B = Base64.getEncoder().encodeToString(userDTO.getUserNIC_imagesBackEnd().getBytes());
+            entityDTOConversion.getUserEntity(userDTO).setUserNICImagesFrontEnd(imgBase64B);
+
             userRepo.save(entityDTOConversion.getUserEntity(userDTO));
+        }else {
+            throw new AlreadyExistException("UserId already exists. UserId is " + userDTO.getUserId());
+
         }
     }
 
@@ -37,13 +50,26 @@ public class UserBoImpl implements UserBO {
     public void delete(String id) {
         if (userRepo.existsById(id)){
             userRepo.deleteById(id);
+        }else {
+            throw new NotFoundException("Id not found. Id is " + id);
+
         }
     }
 
     @Override
     public void update(String id, UserDTO userDTO) {
         if (userRepo.existsById(id)){
+
+            String imgBase64 = Base64.getEncoder().encodeToString(userDTO.getUserNICImagesFrontEnd().getBytes());
+            entityDTOConversion.getUserEntity(userDTO).setUserNICImagesFrontEnd(imgBase64);
+
+            String imgBase64B = Base64.getEncoder().encodeToString(userDTO.getUserNIC_imagesBackEnd().getBytes());
+            entityDTOConversion.getUserEntity(userDTO).setUserNICImagesFrontEnd(imgBase64B);
+
             userRepo.save(entityDTOConversion.getUserEntity(userDTO));
+        }else {
+            throw new NotFoundException("UserId already exists. UserId is " + userDTO.getUserId());
+
         }
     }
 
