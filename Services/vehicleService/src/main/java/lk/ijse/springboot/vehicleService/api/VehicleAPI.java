@@ -11,20 +11,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vehicleService")
+@RequestMapping("api/vehicleService")
 @CrossOrigin
 public class VehicleAPI {
-    @Autowired
-    VehicleBO vehicleBO;
 
-    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseUtil save(@Valid VehicleDTO vehicleDTO){
+    private final VehicleBO vehicleBO;
+
+    public VehicleAPI(VehicleBO vehicleBO) {
+        this.vehicleBO = vehicleBO;
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil save(@ModelAttribute @Valid VehicleDTO vehicleDTO){
         vehicleBO.save(vehicleDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
-    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil update(String id,@RequestBody @Valid VehicleDTO vehicleDTO){
         vehicleBO.update(id, vehicleDTO);
         return new  ResponseUtil(200,"OK",null);
