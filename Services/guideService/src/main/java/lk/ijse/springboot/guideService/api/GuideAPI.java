@@ -8,24 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/guideService")
+@RequestMapping("api/guideService")
 @CrossOrigin
 public class GuideAPI {
     @Autowired
     GuideBO guideBO;
 
-    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseUtil save(@Valid GuideDTO guideDTO){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil save(@Valid GuideDTO guideDTO) throws IOException {
         guideBO.save(guideDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
-    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseUtil update(String id,@RequestBody @Valid  GuideDTO guideDTO){
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil update(String id,@RequestBody @Valid  GuideDTO guideDTO) throws IOException {
         guideBO.update(id, guideDTO);
         return new  ResponseUtil(200,"OK",null);
     }

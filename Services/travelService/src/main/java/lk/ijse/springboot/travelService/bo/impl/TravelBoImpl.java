@@ -2,6 +2,7 @@ package lk.ijse.springboot.travelService.bo.impl;
 
 import lk.ijse.springboot.travelService.bo.TravelBO;
 import lk.ijse.springboot.travelService.bo.exception.AlreadyExistException;
+import lk.ijse.springboot.travelService.bo.exception.NotFoundException;
 import lk.ijse.springboot.travelService.dto.TravelDTO;
 import lk.ijse.springboot.travelService.entity.Travel;
 import lk.ijse.springboot.travelService.repository.TravelRepo;
@@ -37,8 +38,8 @@ public class TravelBoImpl implements TravelBO {
         if(!travelRepo.existsById(travelDTO.getPackageId())){
             Travel travelEntity = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
             String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
-           travelEntity.setUserNIC_images(imgBase64);
-           travelRepo.save(travelEntity);
+            travelEntity.setUserNIC_images(imgBase64);
+            travelRepo.save(travelEntity);
         } else {
             throw new AlreadyExistException("Id already exists. Id is " +travelDTO.getPackageId() );
 
@@ -60,6 +61,9 @@ public class TravelBoImpl implements TravelBO {
 
             travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
 
+
+        }else {
+            throw new NotFoundException("Id not found . Id is " +id);
 
         }
     }

@@ -73,7 +73,7 @@ public class UserBoImpl implements UserBO {
 
             userRepo.save(entityDTOConversion.getUserEntity(userDTO));
         }else {
-            throw new NotFoundException("UserId already exists. UserId is " + userDTO.getUserId());
+            throw new NotFoundException("UserId already exists. UserId is " + id);
 
         }
     }
@@ -85,7 +85,7 @@ public class UserBoImpl implements UserBO {
            UserDTO userDTO = entityDTOConversion.getUserDTO(user);
            return userDTO;
        }else {
-           throw new NotFoundException("UserId already exists. UserId is " +id);
+           throw new NotFoundException("UserId not found. UserId is " +id);
 
        }
     }
