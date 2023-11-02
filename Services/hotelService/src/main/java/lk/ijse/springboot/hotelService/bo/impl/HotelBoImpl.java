@@ -2,6 +2,8 @@ package lk.ijse.springboot.hotelService.bo.impl;
 
 
 import lk.ijse.springboot.hotelService.bo.HotelBO;
+import lk.ijse.springboot.hotelService.bo.exception.AlreadyExistException;
+import lk.ijse.springboot.hotelService.bo.exception.NotFoundException;
 import lk.ijse.springboot.hotelService.dto.HotelDTO;
 import lk.ijse.springboot.hotelService.entity.Hotel;
 import lk.ijse.springboot.hotelService.repository.HotelRepo;
@@ -9,50 +11,59 @@ import lk.ijse.springboot.hotelService.util.EntityDTOConversion;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
 @Transactional
 public class HotelBoImpl implements HotelBO {
-    @Autowired
-    HotelRepo hotelRepo;
+    private final HotelRepo hotelRepo;
 
-    @Autowired
-    EntityDTOConversion entityDTOConversion;
+    private final EntityDTOConversion entityDTOConversion;
 
-    @Autowired
-    ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public HotelBoImpl(HotelRepo hotelRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {
+        this.hotelRepo = hotelRepo;
+        this.entityDTOConversion = entityDTOConversion;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public void save(HotelDTO hotelDTO) {
         if(!hotelRepo.existsById(hotelDTO.getHotelId())){
-            hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
+           hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
+        } else {
+            throw new AlreadyExistException("Id already exists. Id is " +hotelDTO.getHotelId());
+
         }
     }
 
     @Override
     public void delete(String id) {
-        if (hotelRepo.existsById(id)){
-            hotelRepo.deleteById(id);
+        if (hotelRepo.existsById(Long.valueOf(id))){
+            hotelRepo.deleteById(Long.valueOf(id));
         }
     }
 
     @Override
     public void update(String id, HotelDTO hotelDTO) {
-        if (hotelRepo.existsById(id)){
+        if (hotelRepo.existsById(Long.valueOf(id))){
             hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
+        }else {
+            throw new NotFoundException("Id not found . Id is " +id);
+
         }
     }
 
     @Override
     public HotelDTO search(String id) {
-       if (hotelRepo.existsById(id)){
-           Hotel hotel = hotelRepo.findById(id).get();
+       if (hotelRepo.existsById(Long.valueOf(id))){
+           Hotel hotel = hotelRepo.findById(Long.valueOf(id)).get();
            HotelDTO hotelDTO = entityDTOConversion.getUserDTO(hotel);
            return hotelDTO;
        }

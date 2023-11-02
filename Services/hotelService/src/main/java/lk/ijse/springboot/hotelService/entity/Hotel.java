@@ -14,7 +14,7 @@ import lombok.*;
 public class Hotel implements Super {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String hotelId;
+    private long hotelId;
     @NotNull(message = "Hotel name shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid hotel name")
     private String hotelName;
