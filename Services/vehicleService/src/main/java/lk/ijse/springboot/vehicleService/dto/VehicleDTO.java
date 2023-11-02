@@ -1,5 +1,5 @@
 package lk.ijse.springboot.vehicleService.dto;
-
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.*;
 import lk.ijse.springboot.vehicleService.entity.VehicleCategory;
 import lombok.AllArgsConstructor;
@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
 public class VehicleDTO {
 
+    private long vehicleId;
     @NotBlank(message = "Vehicle Brand shouldn't be blank")
     private String vehicleBrand;
     @NotNull(message = "FuelType shouldn't be empty")
