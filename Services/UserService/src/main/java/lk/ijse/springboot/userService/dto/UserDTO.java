@@ -23,13 +23,13 @@ public class UserDTO {
     @Pattern(regexp = "^([0-9]{9}[x|X|v|V]|[0-9]{12})$",message = "Invalid NIC Number")
     private String userNIC;
     @NotNull(message = "Address shouldn't be null ")
-    @Pattern(regexp ="^[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+$"
-            , message = "Invalid address")
+//    @Pattern(regexp ="^[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+$"
+//            , message = "Invalid address")
     private String address;
-    @NotEmpty(message = "User's NIC Images FrontEnd shouldn't be empty")
-    private String userNICImagesFrontEnd;
-    @NotEmpty(message = " User's NIC images BackEnd shouldn't be empty")
-    private String userNIC_imagesBackEnd;
+    @NotNull(message = "User's NIC Images FrontEnd shouldn't be empty")
+    private MultipartFile userNICImagesFrontEnd;
+    @NotNull(message = " User's NIC images BackEnd shouldn't be empty")
+    private MultipartFile userNIC_imagesBackEnd;
     @NotEmpty(message = "Gender shouldn't be empty")
     private String gender;
     @Email(message = "Invalid email address")

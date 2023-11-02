@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WebAppConfig {
     @Bean
-    @LoadBalanced
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }

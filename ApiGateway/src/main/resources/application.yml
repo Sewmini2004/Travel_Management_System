@@ -15,7 +15,6 @@ spring:
           filters:
             - StripPrefix=1
 
-
         - id: vehicle-service
           uri: lb://vehicle-service
           predicates:
