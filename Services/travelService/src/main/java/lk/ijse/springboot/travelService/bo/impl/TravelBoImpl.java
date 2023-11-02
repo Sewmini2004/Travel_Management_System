@@ -17,25 +17,20 @@ import java.util.List;
 @Service
 @Transactional
 public class TravelBoImpl implements TravelBO {
-    @Autowired
-    TravelRepo travelRepo;
+    private final TravelRepo travelRepo;
 
-    @Autowired
-    EntityDTOConversion entityDTOConversion;
+    private final EntityDTOConversion entityDTOConversion;
 
-    @Autowired
-    ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public TravelBoImpl(TravelRepo travelRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {
+        this.travelRepo = travelRepo;
+        this.entityDTOConversion = entityDTOConversion;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public void save(TravelDTO travelDTO) {
-//        check user id
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getForObject("http://guide-service/api/guideService/"+trave)
-//        check vehicle
-//        check hotel
-//        check guide if needed
-
-
         if(!travelRepo.existsById(travelDTO.getPackageId())){
             travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
         }

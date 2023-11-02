@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/travelService")
+@RequestMapping("api/travelService")
 @CrossOrigin
 public class TravelAPI {
 
-    private TravelBO travelBO;
+    private final TravelBO travelBO;
 
     @Autowired
     public TravelAPI(TravelBO travelBO) {
         this.travelBO = travelBO;
     }
 
-    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO){
         travelBO.save(travelDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
-    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil update(String id,@RequestBody  @Valid  TravelDTO travelDTO){
         travelBO.update(id, travelDTO);
         return new  ResponseUtil(200,"OK",null);
