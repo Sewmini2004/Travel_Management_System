@@ -1,9 +1,6 @@
 package lk.ijse.springboot.vehicleService.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -17,6 +14,7 @@ import java.util.List;
 
 public class VehicleCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String vehicleCategoryId;
     private String economy;
     private String midRange;

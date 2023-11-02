@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -22,14 +23,14 @@ public class VehicleAPI {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(@ModelAttribute @Valid VehicleDTO vehicleDTO){
+    public ResponseUtil save(@ModelAttribute @Valid VehicleDTO vehicleDTO) throws IOException {
         vehicleBO.save(vehicleDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody @Valid VehicleDTO vehicleDTO){
+    public ResponseUtil update(String id,@RequestBody @Valid VehicleDTO vehicleDTO) throws IOException {
         vehicleBO.update(id, vehicleDTO);
         return new  ResponseUtil(200,"OK",null);
     }
