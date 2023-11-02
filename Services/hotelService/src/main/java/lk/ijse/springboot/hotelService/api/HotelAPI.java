@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/hotelService")
+@RequestMapping("api/hotelService")
 @CrossOrigin
 public class HotelAPI {
-    @Autowired
-    HotelBO hotelBO;
+    private final HotelBO hotelBO;
 
-    @PostMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public HotelAPI(HotelBO hotelBO) {
+        this.hotelBO = hotelBO;
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil save(@ModelAttribute @Valid HotelDTO hotelDTO){
         hotelBO.save(hotelDTO);
 
@@ -27,7 +30,7 @@ public class HotelAPI {
     }
 
 
-    @PutMapping(produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil update(String id,@RequestBody  @Valid  HotelDTO hotelDTO){
         hotelBO.update(id, hotelDTO);
         return new  ResponseUtil(200,"OK",null);
