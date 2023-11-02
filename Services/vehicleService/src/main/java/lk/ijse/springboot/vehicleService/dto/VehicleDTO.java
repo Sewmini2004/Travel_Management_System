@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class VehicleDTO {
     @NotEmpty(message = "TransmissionType shouldn't be empty")
     private String transmissionType;
     @NotEmpty(message = "Driver License Image shouldn't be empty")
-    private String driverLicenseImage;
+    private MultipartFile driverLicenseImage;
     @NotBlank(message = "ContactNo shouldn't be blank")
     @Pattern(regexp ="^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$" , message = "Invalid contact number")
     private String contactNo;
@@ -34,7 +35,7 @@ public class VehicleDTO {
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid driver's name")
     private String DriverName;
     @NotEmpty(message = "Vehicle Image shouldn't be empty")
-    private String ImagesVehicle;
+    private MultipartFile ImagesVehicle;
     @NotEmpty(message = "Seat Capacity shouldn't be empty")
     @Min(value = 4, message = "Seat Capacity shouldn't be less than 4")
     @Max(value = 200, message = "Seat Capacity shouldn't be greater than 40")
