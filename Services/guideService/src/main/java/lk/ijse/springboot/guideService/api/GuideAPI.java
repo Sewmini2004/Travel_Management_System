@@ -15,8 +15,11 @@ import java.util.List;
 @RequestMapping("api/guideService")
 @CrossOrigin
 public class GuideAPI {
-    @Autowired
-    GuideBO guideBO;
+    private final GuideBO guideBO;
+
+    public GuideAPI(GuideBO guideBO) {
+        this.guideBO = guideBO;
+    }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil save(@Valid GuideDTO guideDTO) throws IOException {

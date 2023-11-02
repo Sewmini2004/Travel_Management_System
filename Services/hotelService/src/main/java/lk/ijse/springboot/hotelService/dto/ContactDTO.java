@@ -1,4 +1,4 @@
-package lk.ijse.springboot.hotelService.entity;
+package lk.ijse.springboot.hotelService.dto;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
@@ -13,8 +13,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Data
-@Embeddable
-public class Contact {
+
+public class ContactDTO {
     @NotBlank(message = "ContactNo shouldn't be blank")
     @Pattern(regexp ="^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$" , message = "Invalid contact number")
     private String contactNumber_1;
