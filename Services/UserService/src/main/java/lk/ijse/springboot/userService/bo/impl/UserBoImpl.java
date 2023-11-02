@@ -23,9 +23,9 @@ import java.util.List;
 public class UserBoImpl implements UserBO {
 
 
-    private UserRepo userRepo;
-    private EntityDTOConversion entityDTOConversion;
-    private ModelMapper modelMapper;
+    private final UserRepo userRepo;
+    private  final EntityDTOConversion entityDTOConversion;
+    private  final ModelMapper modelMapper;
 
     @Autowired
     public UserBoImpl(UserRepo userRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {

@@ -1,9 +1,6 @@
 package lk.ijse.springboot.vehicleService.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -19,7 +16,7 @@ import java.awt.*;
 
 public class Vehicle implements Super {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long vehicleId;
     @NotBlank(message = "Vehicle Brand shouldn't be blank")
     private String vehicleBrand;

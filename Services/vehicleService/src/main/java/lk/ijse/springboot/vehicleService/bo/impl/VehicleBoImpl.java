@@ -19,14 +19,17 @@ import java.util.List;
 @Service
 @Transactional
 public class VehicleBoImpl implements VehicleBO {
-    @Autowired
-    VehicleRepo vehicleRepo;
+    private final VehicleRepo vehicleRepo;
 
-    @Autowired
-    EntityDTOConversion entityDTOConversion;
+    private final EntityDTOConversion entityDTOConversion;
 
-    @Autowired
-    ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public VehicleBoImpl(VehicleRepo vehicleRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {
+        this.vehicleRepo = vehicleRepo;
+        this.entityDTOConversion = entityDTOConversion;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public void save(VehicleDTO vehicleDTO) {
