@@ -34,7 +34,8 @@ public class GuideBoImpl implements GuideBO {
 
     @Override
     public void save(GuideDTO guideDTO) throws IOException {
-        if(!guideRepo.existsById(guideDTO.getGuideId())){
+        Guide guideByNicNumber = guideRepo.findGuideByNicNumber(guideDTO.getNicNumber());
+        if (guideByNicNumber == null) {
             Guide guideEntity = guideRepo.save(entityDTOConversion.getGuideEntity(guideDTO));
             String imgBase64 = Base64.getEncoder().encodeToString(guideDTO.getGuideIdImage().getBytes());
             guideEntity.setGuideIdImage(imgBase64);
@@ -47,22 +48,24 @@ public class GuideBoImpl implements GuideBO {
 
             guideRepo.save(guideEntity);
 
-        }else {
-            throw new AlreadyExistException("Id already exists. Id is " +guideDTO.getGuideId());
+        } else {
+            throw new AlreadyExistException("Nic is already exists. Nic is " + guideDTO.getNicNumber());
 
         }
     }
 
     @Override
     public void delete(String id) {
-        if (guideRepo.existsById(Long.valueOf(id))){
+        if (guideRepo.existsById(Long.valueOf(id))) {
             guideRepo.deleteById(Long.valueOf(id));
+        }else {
+            throw new NotFoundException("Guide not found");
         }
     }
 
     @Override
     public void update(String id, GuideDTO guideDTO) throws IOException {
-        if (guideRepo.existsById(Long.valueOf(id))){
+        if (guideRepo.existsById(Long.valueOf(id))) {
             Guide guideEntity = guideRepo.save(entityDTOConversion.getGuideEntity(guideDTO));
 
             String imgBase64 = Base64.getEncoder().encodeToString(guideDTO.getGuideIdImage().getBytes());
@@ -75,20 +78,20 @@ public class GuideBoImpl implements GuideBO {
             guideEntity.setNicImageBackEnd(imgBase64B);
 
             guideRepo.save(guideEntity);
-        }else {
-            throw new NotFoundException("Id not found . Id is " +id );
+        } else {
+            throw new NotFoundException("Id not found . Id is " + id);
 
         }
     }
 
     @Override
     public GuideDTO search(String id) {
-       if (guideRepo.existsById(Long.valueOf(id))){
-           Guide guide = guideRepo.findById(Long.valueOf(id)).get();
-           GuideDTO guideDTO = entityDTOConversion.getGuideDTO(guide);
-           return guideDTO;
-       }
-       return null;
+        if (guideRepo.existsById(Long.valueOf(id))) {
+            Guide guide = guideRepo.findById(Long.valueOf(id)).get();
+            GuideDTO guideDTO = entityDTOConversion.getGuideDTO(guide);
+            return guideDTO;
+        }
+        return null;
     }
 
     @Override

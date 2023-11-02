@@ -24,8 +24,8 @@ public class UserBoImpl implements UserBO {
 
 
     private final UserRepo userRepo;
-    private  final EntityDTOConversion entityDTOConversion;
-    private  final ModelMapper modelMapper;
+    private final EntityDTOConversion entityDTOConversion;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public UserBoImpl(UserRepo userRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {
@@ -37,25 +37,25 @@ public class UserBoImpl implements UserBO {
 
     @Override
     public void save(UserDTO userDTO) throws IOException {
-        if(!userRepo.existsById(userDTO.getUserId())){
+        if (userRepo.findByUsername(userDTO.getUsername()) == null) {
             User userEntity = entityDTOConversion.getUserEntity(userDTO);
             String imgBase64 = Base64.getEncoder().encodeToString(userDTO.getUserNICImagesFrontEnd().getBytes());
             String imgBase64B = Base64.getEncoder().encodeToString(userDTO.getUserNIC_imagesBackEnd().getBytes());
             userEntity.setUserNICImagesFrontEnd(imgBase64);
             userEntity.setUserNIC_imagesBackEnd(imgBase64B);
             userRepo.save(userEntity);
-        }else {
-            throw new AlreadyExistException("UserId already exists. UserId is " + userDTO.getUserId());
+        } else {
+            throw new AlreadyExistException("Username already exists. Username is " + userDTO.getUsername());
 
         }
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(long id) {
 
-        if (userRepo.existsById(Long.valueOf(id))){
-            userRepo.deleteById(Long.valueOf(id));
-        }else {
+        if (userRepo.existsById(id)) {
+            userRepo.deleteById(id);
+        } else {
             throw new NotFoundException("Id not found. Id is " + id);
 
         }
@@ -63,7 +63,7 @@ public class UserBoImpl implements UserBO {
 
     @Override
     public void update(String id, UserDTO userDTO) throws IOException {
-        if (userRepo.existsById(Long.valueOf(id))){
+        if (userRepo.existsById(Long.valueOf(id))) {
 
             String imgBase64 = Base64.getEncoder().encodeToString(userDTO.getUserNICImagesFrontEnd().getBytes());
             entityDTOConversion.getUserEntity(userDTO).setUserNICImagesFrontEnd(imgBase64);
@@ -72,22 +72,29 @@ public class UserBoImpl implements UserBO {
             entityDTOConversion.getUserEntity(userDTO).setUserNICImagesFrontEnd(imgBase64B);
 
             userRepo.save(entityDTOConversion.getUserEntity(userDTO));
-        }else {
-            throw new NotFoundException("UserId already exists. UserId is " + id);
+        } else {
+            throw new NotFoundException("User not found " + userDTO.getUsername());
 
         }
     }
 
     @Override
     public UserDTO search(String id) {
-       if (userRepo.existsById(Long.valueOf(id))){
-           User user = userRepo.findById(Long.valueOf(id)).get();
-           UserDTO userDTO = entityDTOConversion.getUserDTO(user);
-           return userDTO;
-       }else {
-           throw new NotFoundException("UserId not found. UserId is " +id);
+        if (userRepo.existsById(Long.valueOf(id))) {
+            User user = userRepo.findById(Long.valueOf(id)).get();
+            UserDTO userDTO = entityDTOConversion.getUserDTO(user);
+            return userDTO;
+        } else {
+            throw new NotFoundException("UserId not found. UserId is " + id);
 
-       }
+        }
+    }
+
+    @Override
+    public UserDTO findByUsername(String username) {
+        User byUsername = userRepo.findByUsername(username);
+        if (byUsername == null) return modelMapper.map(byUsername, UserDTO.class);
+        else throw new NotFoundException("User not found : " + username);
     }
 
     @Override

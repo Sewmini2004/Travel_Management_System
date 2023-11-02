@@ -29,13 +29,13 @@ public class GuideAPI {
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody @Valid  GuideDTO guideDTO) throws IOException {
-        guideBO.update(id, guideDTO);
+    public ResponseUtil update(@ModelAttribute @Valid  GuideDTO guideDTO) throws IOException {
+        guideBO.update(String.valueOf(guideDTO.getGuideId()), guideDTO);
         return new  ResponseUtil(200,"OK",null);
     }
 
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil delete(String id){
+    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil delete(@PathVariable String id){
        guideBO.delete(id);
         return new  ResponseUtil(200,"OK",null);
     }

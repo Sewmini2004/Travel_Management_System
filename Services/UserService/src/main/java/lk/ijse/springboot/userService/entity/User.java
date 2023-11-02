@@ -10,10 +10,11 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
+
 public class User implements Super {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userId; //om thyeddi ai athn string dunne oya dl tibbt passe ne mn long kre klin mn dmme srting ethkot auto generate wenenni sting ee nisa ark demm arwge wens krnn beri una dn ar tk wens krla aye db ek dlt krla manika project ek run krl blnn me vcl ekk gnnei ha ha
+    private long userId;
     @NotNull(message = "Username shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid username")
     private String username;

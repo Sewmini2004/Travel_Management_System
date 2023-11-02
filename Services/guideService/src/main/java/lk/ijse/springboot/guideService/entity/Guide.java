@@ -1,9 +1,6 @@
 package lk.ijse.springboot.guideService.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -14,7 +11,6 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-
 public class Guide implements Super {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +18,15 @@ public class Guide implements Super {
     @NotNull(message = "Guide name shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid guide name")
     private String guideName;
+    @NotEmpty(message = "Nic cannot be empty")
+    @Column(unique = true)
+    String nicNumber;
     @NotNull(message = "Guide address shouldn't be null ")
    /* @Pattern(regexp ="^[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+$"
     , message = "Invalid  guide address")*/
     private String guideAddress;
     @NotNull(message = "Guide's Id images shouldn't be empty")
+    @Column(columnDefinition = "longtext")
     private String guideIdImage;
     @NotEmpty(message = "Gender shouldn't be empty")
     private String gender;
@@ -34,8 +34,10 @@ public class Guide implements Super {
     @Pattern(regexp ="^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$" , message = "Invalid contact number")
     private String contactNumber;
     @NotNull(message = "Guide's NIC Images FrontEnd shouldn't be empty")
+    @Column(columnDefinition = "longtext")
     private String nicImageFrontEnd;
     @NotNull(message = "Guide's NIC Images BackEnd shouldn't be empty")
+    @Column(columnDefinition = "longtext")
     private String nicImageBackEnd;
     @NotEmpty(message = "Experience shouldn't be empty")
     private String Experience;
@@ -44,5 +46,8 @@ public class Guide implements Super {
     private int manDayValue;
     @NotEmpty(message = "Remarks shouldn't be empty")
     private String remarks;
+
+
+
 
 }

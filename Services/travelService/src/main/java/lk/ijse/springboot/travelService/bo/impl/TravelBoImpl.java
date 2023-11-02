@@ -33,13 +33,16 @@ public class TravelBoImpl implements TravelBO {
         this.modelMapper = modelMapper;
     }
 
+
     @Override
     public void save(TravelDTO travelDTO) throws IOException {
+
         if(!travelRepo.existsById(travelDTO.getPackageId())){
             Travel travelEntity = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
             String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
             travelEntity.setUserNIC_images(imgBase64);
             travelRepo.save(travelEntity);
+
         } else {
             throw new AlreadyExistException("Id already exists. Id is " +travelDTO.getPackageId() );
 

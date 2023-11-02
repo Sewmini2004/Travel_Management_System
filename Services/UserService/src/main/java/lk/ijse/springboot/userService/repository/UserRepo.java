@@ -8,4 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface UserRepo extends JpaRepository<User,Long> {
 
+    User findByUsername(String username);
+
 }

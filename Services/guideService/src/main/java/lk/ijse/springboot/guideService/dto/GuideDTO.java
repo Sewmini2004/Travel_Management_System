@@ -18,6 +18,7 @@ public class GuideDTO {
     @NotNull(message = "Guide name shouldn't be null")
     @Pattern(regexp = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$" , message ="Invalid guide name")
     private String guideName;
+    String nicNumber;
     @NotNull(message = "Guide address shouldn't be null ")
    /* @Pattern(regexp ="^[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+[a-zA-Z0-9\\\\s,.'-]+$"
     , message = "Invalid  guide address")*/

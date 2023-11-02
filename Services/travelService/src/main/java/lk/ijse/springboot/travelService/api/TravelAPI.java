@@ -18,9 +18,8 @@ import java.util.List;
 @RequestMapping("api/travelService")
 @CrossOrigin
 public class TravelAPI {
-
+// komd ee
     private final TravelBO travelBO;
-
     @Autowired
     public TravelAPI(TravelBO travelBO) {
         this.travelBO = travelBO;

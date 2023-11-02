@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface HotelBO {
     void save(HotelDTO hotelDTO);
-    void delete(String id);
-    void update(String id, HotelDTO hotelDTO);
-    HotelDTO search(String id);
+    void delete(long id);
+    void update(long id, HotelDTO hotelDTO);
+    HotelDTO search(long id);
     List<HotelDTO> getAll();
 
 }

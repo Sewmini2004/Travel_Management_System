@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface UserBO {
     void save(UserDTO userDTO) throws IOException;
-    void delete(String id);
+    void delete(long id);
     void update(String id, UserDTO userDTO) throws IOException;
     UserDTO search(String id);
+    UserDTO findByUsername(String id);
     List<UserDTO> getAll();
 
 }

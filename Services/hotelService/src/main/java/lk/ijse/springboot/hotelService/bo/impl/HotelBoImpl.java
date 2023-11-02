@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -35,46 +34,42 @@ public class HotelBoImpl implements HotelBO {
 
     @Override
     public void save(HotelDTO hotelDTO) {
-        if(!hotelRepo.existsById(hotelDTO.getHotelId())){
+        if(hotelRepo.findByHotelEmail(hotelDTO.getHotelEmail())==null){
            hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
         } else {
-            throw new AlreadyExistException("Id already exists. Id is " +hotelDTO.getHotelId());
-
+            throw new AlreadyExistException("Hotel is already exists " +hotelDTO.getHotelEmail());
         }
     }
 
     @Override
-    public void delete(String id) {
-        if (hotelRepo.existsById(Long.valueOf(id))){
-            hotelRepo.deleteById(Long.valueOf(id));
-        }
+    public void delete(long id) {
+        if (hotelRepo.existsById(id)){
+            hotelRepo.deleteById(id);
+        }else throw new NotFoundException("Hotel not found " +id);
     }
 
     @Override
-    public void update(String id, HotelDTO hotelDTO) {
-        if (hotelRepo.existsById(Long.valueOf(id))){
+    public void update(long id, HotelDTO hotelDTO) {
+        if (hotelRepo.existsById(id)){
             hotelRepo.save(entityDTOConversion.getUserEntity(hotelDTO));
         }else {
-            throw new NotFoundException("Id not found . Id is " +id);
-
+            throw new NotFoundException("Hotel not found " +id);
         }
     }
 
     @Override
-    public HotelDTO search(String id) {
-       if (hotelRepo.existsById(Long.valueOf(id))){
-           Hotel hotel = hotelRepo.findById(Long.valueOf(id)).get();
-           HotelDTO hotelDTO = entityDTOConversion.getUserDTO(hotel);
-           return hotelDTO;
-       }
-       return null;
+    public HotelDTO search(long id) {
+       if (hotelRepo.existsById(id)){
+           Hotel hotel = hotelRepo.findById(id).get();
+           return entityDTOConversion.getUserDTO(hotel);
+       }else
+           throw new NotFoundException("Hotel not found " +id);
     }
 
     @Override
     public List<HotelDTO> getAll() {
         List<Hotel> all = hotelRepo.findAll();
-        List<HotelDTO> requestDTOList = modelMapper.map(all, new TypeToken<List<HotelDTO>>() {
+        return modelMapper.map(all, new TypeToken<List<HotelDTO>>() {
         }.getType());
-        return requestDTOList;
     }
 }
