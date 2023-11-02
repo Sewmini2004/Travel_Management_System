@@ -1,26 +1,28 @@
 package lk.ijse.springboot.travelService.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import java.util.Date;
+
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
 public class DurationDto {
-    @NotEmpty(message = "Start Date shouldn't be empty")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
-    @NotEmpty(message = "End Date shouldn't be empty")
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
     @Min(value = 1, message = "Day count shouldn't be less than 0")
     @Max(value = 7, message = "Day count  shouldn't be greater than 7")

@@ -2,6 +2,8 @@ package lk.ijse.springboot.travelService.api;
 
 import jakarta.validation.Valid;
 import lk.ijse.springboot.travelService.bo.TravelBO;
+import lk.ijse.springboot.travelService.dto.DurationDto;
+import lk.ijse.springboot.travelService.dto.PackageValueDto;
 import lk.ijse.springboot.travelService.dto.TravelDTO;
 import lk.ijse.springboot.travelService.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,12 @@ public class TravelAPI {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO) throws IOException {
+    public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO,
+                             @ModelAttribute @Valid DurationDto durationDto,
+                             @ModelAttribute @Valid PackageValueDto packageValueDto) throws IOException {
+
+        travelDTO.setTravelDurationDto(durationDto);
+        travelDTO.setPackageValue(packageValueDto);
         travelBO.save(travelDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
