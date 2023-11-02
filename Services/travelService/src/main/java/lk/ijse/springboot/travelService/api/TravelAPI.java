@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,14 +25,14 @@ public class TravelAPI {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO){
+    public ResponseUtil save(@ModelAttribute @Valid TravelDTO travelDTO) throws IOException {
         travelBO.save(travelDTO);
 
         return new ResponseUtil(200,"Saved Success",null);
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody  @Valid  TravelDTO travelDTO){
+    public ResponseUtil update(String id,@RequestBody  @Valid  TravelDTO travelDTO) throws IOException {
         travelBO.update(id, travelDTO);
         return new  ResponseUtil(200,"OK",null);
     }
