@@ -47,6 +47,6 @@ public class VehicleDTO {
     private String remarks;
     @NotEmpty(message = "vehicle Type shouldn't be empty")
     private String vehicleType;
-    private VehicleCategory vehicleCategory;
+    private VehicleCategoryDto vehicleCategory;
 
 }

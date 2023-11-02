@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 public class TravelDTO {
 
-    private long packageId;
+    private String packageId;
     private long userId;
     private long hotelId;
     private long guideId;

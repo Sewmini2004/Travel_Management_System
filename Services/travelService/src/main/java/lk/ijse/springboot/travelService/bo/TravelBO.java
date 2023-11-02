@@ -12,5 +12,6 @@ public interface TravelBO {
     void update(String id, TravelDTO travelDTO) throws IOException;
     TravelDTO search(String id);
     List<TravelDTO> getAll();
+    String generateNextId();
 
 }

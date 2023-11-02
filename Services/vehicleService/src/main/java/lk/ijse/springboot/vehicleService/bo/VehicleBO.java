@@ -10,7 +10,7 @@ import java.util.List;
 public interface VehicleBO {
     void save(VehicleDTO vehicleDTO) throws IOException;
     void delete(String id);
-    void update(String id, VehicleDTO vehicleDTO) throws IOException;
+    void update(long id, VehicleDTO vehicleDTO) throws IOException;
     VehicleDTO search(String id);
     List<VehicleDTO> getAll();
 

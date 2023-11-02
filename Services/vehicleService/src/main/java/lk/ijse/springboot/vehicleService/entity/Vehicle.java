@@ -51,8 +51,4 @@ public class Vehicle implements Super {
     private String vehicleType;
     @ManyToOne
     private VehicleCategory vehicleCategory;
-
-
-
-
 }

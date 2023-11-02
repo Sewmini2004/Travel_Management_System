@@ -14,6 +14,7 @@ import lombok.ToString;
 @ToString
 @Data
 @Embeddable
+
 public class Contact {
     @NotBlank(message = "ContactNo shouldn't be blank")
     @Pattern(regexp ="^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$" , message = "Invalid contact number")

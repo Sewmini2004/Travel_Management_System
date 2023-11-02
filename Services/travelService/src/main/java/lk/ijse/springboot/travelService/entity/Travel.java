@@ -15,8 +15,7 @@ import lombok.*;
 
 public class Travel implements Super {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long packageId;
+    private String packageId;
     private long userId;
     private long hotelId;
     private long guideId;

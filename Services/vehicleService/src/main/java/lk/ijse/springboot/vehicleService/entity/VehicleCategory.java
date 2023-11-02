@@ -11,16 +11,10 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
-
 public class VehicleCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String vehicleCategoryId;
-    private String economy;
-    private String midRange;
-    private String luxury;
-    private String superLuxury;
+    private String category;
     @OneToMany(mappedBy = "vehicleCategory",cascade = CascadeType.ALL)
     private List<Vehicle> vehicles;
-
 }
+

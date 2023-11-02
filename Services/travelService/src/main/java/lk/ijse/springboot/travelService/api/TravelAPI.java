@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("api/travelService")
 @CrossOrigin
 public class TravelAPI {
-// komd ee
+
     private final TravelBO travelBO;
     @Autowired
     public TravelAPI(TravelBO travelBO) {
@@ -33,18 +33,21 @@ public class TravelAPI {
         travelDTO.setTravelDurationDto(durationDto);
         travelDTO.setPackageValue(packageValueDto);
         travelBO.save(travelDTO);
-
         return new ResponseUtil(200,"Saved Success",null);
     }
 
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil update(String id,@RequestBody  @Valid  TravelDTO travelDTO) throws IOException {
-        travelBO.update(id, travelDTO);
+    public ResponseUtil update(@ModelAttribute @Valid TravelDTO travelDTO,
+                               @ModelAttribute @Valid DurationDto travelDuration,
+                               @ModelAttribute @Valid PackageValueDto packageValueDto) throws IOException {
+        travelDTO.setTravelDurationDto(travelDuration);
+        travelDTO.setPackageValue(packageValueDto);
+        travelBO.update(travelDTO.getPackageId(), travelDTO);
         return new  ResponseUtil(200,"OK",null);
     }
 
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil delete(String id){
+    @DeleteMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil delete(@PathVariable String id){
        travelBO.delete(id);
         return new  ResponseUtil(200,"OK",null);
     }

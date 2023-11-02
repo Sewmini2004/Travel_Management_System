@@ -37,55 +37,51 @@ public class TravelBoImpl implements TravelBO {
     @Override
     public void save(TravelDTO travelDTO) throws IOException {
 
-        if(!travelRepo.existsById(travelDTO.getPackageId())){
-            Travel travelEntity = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
-            String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
-            travelEntity.setUserNIC_images(imgBase64);
-            travelRepo.save(travelEntity);
+//        TODO: check vehicle,guide,user,hotel form other services
+//         1-> user
+//         2-> hotel vehicle
+//         3-> guide
 
-        } else {
-            throw new AlreadyExistException("Id already exists. Id is " +travelDTO.getPackageId() );
-
-        }
+        travelDTO.setPackageId(generateNextId());
+        Travel travelEntity = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
+        String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
+        travelEntity.setUserNIC_images(imgBase64);
+        travelRepo.save(travelEntity);
     }
 
     @Override
     public void delete(String id) {
-        if (travelRepo.existsById(Long.valueOf(id))){
-            travelRepo.deleteById(Long.valueOf(id));
-        }
+        if (travelRepo.existsById(id)) {
+            travelRepo.deleteById(id);
+        } else throw new NotFoundException("Package is not found. " + id);
     }
 
     @Override
     public void update(String id, TravelDTO travelDTO) throws IOException {
-        if (travelRepo.existsById(Long.valueOf(id))){
+        if (travelRepo.existsById(id)) {
             String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
             entityDTOConversion.getTravelEntity(travelDTO).setUserNIC_images(imgBase64);
-
             travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
-
-
-        }else {
-            throw new NotFoundException("Id not found . Id is " +id);
-
-        }
+        } else throw new NotFoundException("Package is not found. " + id);
     }
 
     @Override
     public TravelDTO search(String id) {
-       if (travelRepo.existsById(Long.valueOf(id))){
-           Travel travel = travelRepo.findById(Long.valueOf(id)).get();
-           TravelDTO travelDTO = entityDTOConversion.getTravelDTO(travel);
-           return travelDTO;
-       }
-       return null;
+        if (travelRepo.existsById(id)) {
+            Travel travel = travelRepo.findById(id).get();
+            return entityDTOConversion.getTravelDTO(travel);
+        } else throw new NotFoundException("Package is not found. " + id);
     }
 
     @Override
     public List<TravelDTO> getAll() {
         List<Travel> all = travelRepo.findAll();
-        List<TravelDTO> travelDTOList = modelMapper.map(all, new TypeToken<List<TravelDTO>>() {
+        return modelMapper.map(all, new TypeToken<List<TravelDTO>>() {
         }.getType());
-        return travelDTOList;
+    }
+
+    @Override
+    public String generateNextId() {
+        return String.format("NEXT_%06d", travelRepo.findAll().size()+1);
     }
 }
