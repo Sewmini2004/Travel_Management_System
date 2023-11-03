@@ -1,5 +1,4 @@
-package lk.ijse.springboot.userService.dto;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package lk.ijse.springboot.travelService.dto.other_service_dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -37,7 +36,6 @@ public class UserDTO {
     @Pattern(regexp ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$" , message = "Invalid Email address")
     private String email;
     @NotNull(message = "Password shouldn't be null")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @NotNull(message = "Role shouldn't be null")
     @Pattern(message = "Role should be user or admin",

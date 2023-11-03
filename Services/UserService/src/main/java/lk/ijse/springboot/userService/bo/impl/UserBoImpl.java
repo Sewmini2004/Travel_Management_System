@@ -12,6 +12,7 @@ import lk.ijse.springboot.userService.util.EntityDTOConversion;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,13 +23,14 @@ import java.util.List;
 @Transactional
 public class UserBoImpl implements UserBO {
 
-
+    private final PasswordEncoder passwordEncoder;
     private final UserRepo userRepo;
     private final EntityDTOConversion entityDTOConversion;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public UserBoImpl(UserRepo userRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {
+    public UserBoImpl(PasswordEncoder passwordEncoder, UserRepo userRepo, EntityDTOConversion entityDTOConversion, ModelMapper modelMapper) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepo = userRepo;
         this.entityDTOConversion = entityDTOConversion;
         this.modelMapper = modelMapper;
@@ -37,12 +39,14 @@ public class UserBoImpl implements UserBO {
 
     @Override
     public void save(UserDTO userDTO) throws IOException {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         if (userRepo.findByUsername(userDTO.getUsername()) == null) {
             User userEntity = entityDTOConversion.getUserEntity(userDTO);
             String imgBase64 = Base64.getEncoder().encodeToString(userDTO.getUserNICImagesFrontEnd().getBytes());
             String imgBase64B = Base64.getEncoder().encodeToString(userDTO.getUserNIC_imagesBackEnd().getBytes());
             userEntity.setUserNICImagesFrontEnd(imgBase64);
             userEntity.setUserNIC_imagesBackEnd(imgBase64B);
+            userDTO.setRole("ROLE_" + userDTO.getRole().toUpperCase().trim());
             userRepo.save(userEntity);
         } else {
             throw new AlreadyExistException("Username already exists. Username is " + userDTO.getUsername());

@@ -28,7 +28,6 @@ public class TravelDTO {
     @Min(value = 0, message = "Child  count shouldn't be less than 0")
     private int noOfChildren;
     @NotNull(message = " User's NIC images BackEnd shouldn't be empty")
-    @Column(columnDefinition = "LONGTEXT")
     private MultipartFile userNIC_images;
     @NotNull(message = " need Guide Or No shouldn't be empty")
     private boolean needGuideOrNo;
