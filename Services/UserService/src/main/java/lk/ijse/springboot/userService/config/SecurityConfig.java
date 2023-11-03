@@ -35,9 +35,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(httpSecurityCsrfConfigurer ->
                         httpSecurityCsrfConfigurer.csrfTokenRequestHandler(handler)
-                                .ignoringRequestMatchers("api/userService")
+                                .ignoringRequestMatchers("/api/userService")
                                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-//                Origin
+
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(
                         new CorsConfigurationSource() {
                             @Override
@@ -58,15 +58,17 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(req -> {
                     req
-                            .requestMatchers(HttpMethod.POST, "api/userService")
+                            .requestMatchers("/api/userService/login")
+                            .authenticated()
+                            .requestMatchers(HttpMethod.POST, "/api/userService")
                             .permitAll()
-                            .requestMatchers(HttpMethod.PUT, "api/userService")
+                            .requestMatchers(HttpMethod.PUT, "/api/userService")
                             .hasAnyRole("USER", "ADMIN")
-                            .requestMatchers(HttpMethod.DELETE, "api/userService")
+                            .requestMatchers(HttpMethod.DELETE, "/api/userService")
                             .hasAnyRole("USER", "ADMIN")
-                            .requestMatchers(HttpMethod.GET, "api/userService/{id}")
+                            .requestMatchers(HttpMethod.GET, "/api/userService/{id}")
                             .hasAnyRole("USER", "ADMIN")
-                            .requestMatchers(HttpMethod.GET, "api/userService")
+                            .requestMatchers(HttpMethod.GET, "/api/userService")
                             .hasRole("ADMIN");
                 });
         http.formLogin(Customizer.withDefaults()); //login page ek eno

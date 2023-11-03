@@ -66,14 +66,54 @@ public class TravelBoImpl implements TravelBO {
                     })
                     .block();
 
-            LinkedHashMap data = (LinkedHashMap) hotelFormService.getData();
+            LinkedHashMap hotel = (LinkedHashMap) hotelFormService.getData();
 
-            if(data!=null){
-                travelDTO.setPackageId(generateNextId());
-                Travel travelEntity = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
-                String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
-                travelEntity.setUserNIC_images(imgBase64);
-                travelRepo.save(travelEntity);
+            if(hotel!=null){
+
+                //vehicle
+
+                ResponseUtil vehicleFormService = webClient
+                        .get()
+                        .uri("lb://vehicle-service/api/vehicleService/" + travelDTO.getVehicleId())
+                        .retrieve()
+                        .bodyToMono(ResponseUtil.class)
+                        .doOnError(throwable -> {
+                            throw new NotFoundException("Vehicle Is not found");
+                        })
+                        .block();
+
+                LinkedHashMap vehicle = (LinkedHashMap) vehicleFormService.getData();
+
+
+                if(vehicle!=null) {
+
+                    //guide
+
+                    ResponseUtil guideFormService = webClient
+                            .get()
+                            .uri("lb://guide-service/api/guideService/" + travelDTO.getGuideId())
+                            .retrieve()
+                            .bodyToMono(ResponseUtil.class)
+                            .doOnError(throwable -> {
+                                throw new NotFoundException("Guide Is not found");
+                            })
+                            .block();
+
+                    LinkedHashMap guide = (LinkedHashMap) guideFormService.getData();
+
+
+
+                    if(guide!=null) {
+
+                        travelDTO.setPackageId(generateNextId());
+                        Travel travelEntity = travelRepo.save(entityDTOConversion.getTravelEntity(travelDTO));
+                        String imgBase64 = Base64.getEncoder().encodeToString(travelDTO.getUserNIC_images().getBytes());
+                        travelEntity.setUserNIC_images(imgBase64);
+                        travelRepo.save(travelEntity);
+
+
+                    }
+                }
             }
         }
 

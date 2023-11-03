@@ -44,8 +44,6 @@ public class User implements Super, UserDetails {
     @NotNull(message = "Password shouldn't be null")
     private String password;
     @NotNull(message = "Role shouldn't be null")
-    @Pattern(message = "Role should be user or admin",
-            regexp = "^(user|admin)$")
     private String role;
     @NotEmpty(message = "Remarks shouldn't be empty")
     private String remarks;

@@ -27,7 +27,6 @@ public class JWTGenerator extends OncePerRequestFilter {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SecurityConstant.SECRET));
-
             Map<String, Object> claims = new HashMap<>();
             claims.put("username", authentication.getName());
 
@@ -52,6 +51,6 @@ public class JWTGenerator extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return !request.getServletPath().equals("api/userService/login");
+        return !request.getServletPath().equals("/api/userService/login");
     }
 }

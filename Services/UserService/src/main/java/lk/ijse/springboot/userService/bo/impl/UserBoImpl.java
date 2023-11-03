@@ -97,8 +97,8 @@ public class UserBoImpl implements UserBO {
     @Override
     public UserDTO findByUsername(String username) {
         User byUsername = userRepo.findByUsername(username);
-        if (byUsername == null) return modelMapper.map(byUsername, UserDTO.class);
-        else throw new NotFoundException("User not found : " + username);
+        if (byUsername == null)throw new NotFoundException("User not found : " + username);
+        else return modelMapper.map(byUsername, UserDTO.class);
     }
 
     @Override

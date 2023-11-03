@@ -42,14 +42,12 @@ public class JwtValidator extends OncePerRequestFilter {
             Authentication authentication = new UsernamePasswordAuthenticationToken
                     (username, null, List.of(new SimpleGrantedAuthority(authorities)));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            throw new BadCredentialsException("Invalid token !");
         }
         filterChain.doFilter(request, response);
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getServletPath().equals("api/userService/login");
+        return request.getServletPath().equals("/api/userService/login");
     }
 }
